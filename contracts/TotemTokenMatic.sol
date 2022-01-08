@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity =0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
@@ -10,9 +10,9 @@ contract TotemTokenMatic is ERC20, ERC20Burnable, AccessControl, ERC20Permit {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
 
-    constructor(address _childChainManagerProxy) ERC20("TOTEM", "TOTEM") ERC20Permit("TOTEM") {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(MINTER_ROLE, msg.sender);
+    constructor(address _adminMultiSign, address _mintMultiSign, address _childChainManagerProxy) ERC20("TOTEM", "TOTEM") ERC20Permit("TOTEM") {
+        _setupRole(DEFAULT_ADMIN_ROLE, _adminMultiSign);
+        _setupRole(MINTER_ROLE, _mintMultiSign);
         _setupRole(DEPOSITOR_ROLE, _childChainManagerProxy);
     }
 
